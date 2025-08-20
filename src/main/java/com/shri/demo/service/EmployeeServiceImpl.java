@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.shri.demo.exceptonHandler.ResourceNotFoundException;
 import com.shri.demo.pojo.Employee;
 import com.shri.demo.repository.EmployeeRepository;
 @Service
@@ -53,5 +54,18 @@ public class EmployeeServiceImpl implements EmployeeService{
 		}
 		return null; 
 	}
- 
+
+	@Override
+	public Employee updateByempId(String empId,Employee updatedEmployee) {
+		
+		return employeeRepository.findById(empId).map(existingEmployee ->{
+			existingEmployee.setEmpName(updatedEmployee.getEmpName());
+			existingEmployee.setDesgn(updatedEmployee.getDesgn());
+			existingEmployee.setLocation(updatedEmployee.getLocation());
+			existingEmployee.setSalary(updatedEmployee.getSalary());
+			return employeeRepository.save(existingEmployee);
+		}).orElseThrow(()->new ResourceNotFoundException("Employee not found with id :"+empId));
+	}
+
+	
 }

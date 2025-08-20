@@ -11,7 +11,7 @@ public interface EmployeeService {
 	public Optional<Employee> findById(String empId);
 	public Employee findBydesgn(String desgn);
 	public Employee deleteByempId(String empId);
-	
+	Employee updateByempId(String empId, Employee updatedEmployee);
 	
 	
 }

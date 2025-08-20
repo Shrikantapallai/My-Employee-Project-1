@@ -1,6 +1,7 @@
 package com.shri.demo.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,5 +88,20 @@ public class EmployeeController {
 		Employee employee=employeeService.updateByempId(empId,updatedEmployee);
 		return ResponseEntity.ok(employee);
 	}
+	@GetMapping("/highest-by-dept")
+    public ResponseEntity<List< Employee>> getHighestByDepartment() {
+        List< Employee> result = employeeService.getHighestPaidPerDepartment();
+        return ResponseEntity.ok(result);
+    }
+	
+	@GetMapping("/highest-salary")
+	public ResponseEntity<Employee> getSalary() {
+	    Employee highestSalary =  employeeService.getHigestSalary();
 
+	    if (highestSalary != null) {
+	        return new ResponseEntity<>(highestSalary, HttpStatus.OK);
+	    } else {
+	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	    }
+	}
 }

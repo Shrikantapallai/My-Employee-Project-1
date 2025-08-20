@@ -1,8 +1,13 @@
 package com.shri.demo.service;
 
+
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,6 +71,17 @@ public class EmployeeServiceImpl implements EmployeeService{
 			return employeeRepository.save(existingEmployee);
 		}).orElseThrow(()->new ResourceNotFoundException("Employee not found with id :"+empId));
 	}
+	@Override
+	public List<Employee> getHighestPaidPerDepartment() {
+        return employeeRepository.findHighestPaidPerDepartment();
+    }
 
+	@Override
+	public Employee getHigestSalary() {
+		return employeeRepository.findHigestSalary();
+	}
 	
 }
+
+	
+

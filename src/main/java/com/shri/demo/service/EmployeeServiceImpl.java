@@ -9,19 +9,24 @@ import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import com.shri.demo.apiResponse.ApiResponse;
+import com.shri.demo.pojo.EmployeeAdress;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.shri.demo.exceptonHandler.ResourceNotFoundException;
 import com.shri.demo.pojo.Employee;
 import com.shri.demo.repository.EmployeeRepository;
+import org.springframework.transaction.annotation.Transactional;
+
 @Service
 public class EmployeeServiceImpl implements EmployeeService{
 	private EmployeeRepository employeeRepository;
 	
 	  @Autowired
 	public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
-		this.employeeRepository=employeeRepository;
+
+		  this.employeeRepository=employeeRepository;
 	}
 
 	@Override
@@ -80,7 +85,23 @@ public class EmployeeServiceImpl implements EmployeeService{
 	public Employee getHigestSalary() {
 		return employeeRepository.findHigestSalary();
 	}
-	
+
+
+	@Transactional
+	public Employee updateEmployeeAdress(String empId, EmployeeAdress adress){
+		 Employee employee= employeeRepository.findById(empId).orElseThrow(()->new ResourceNotFoundException("Employee not found with id :"+empId));
+		 EmployeeAdress employeeAdress1=new EmployeeAdress();
+		 employeeAdress1.setHouseNo(adress.getHouseNo());
+		 employeeAdress1.setStreetname(adress.getStreetname());
+		 employeeAdress1.setPostoffice(adress.getPostoffice());
+		 employeeAdress1.setPincode(adress.getPincode());
+
+		 employee.setEmployeeAdress(employeeAdress1);
+
+		 return  employeeRepository.save(employee);
+
+	}
+
 }
 
 	

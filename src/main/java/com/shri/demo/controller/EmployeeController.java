@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.shri.demo.pojo.EmployeeAdress;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,8 +40,8 @@ public class EmployeeController {
 				new ApiResponse<>("Employee saved successfully",true,saving),HttpStatus.CREATED);
 	}
 	
-	@GetMapping("/getEmp")
-	public ResponseEntity<ApiResponse<Employee>> getEmployeeById(@RequestParam("empId") String empId ){
+	@GetMapping("/getEmp/{empId}")
+	public ResponseEntity<ApiResponse<Employee>> getEmployeeById(@PathVariable String empId ){
 		Employee employee = employeeService.findById(empId).orElseThrow(
 				()->new ResourceNotFoundException("employee not found with id :"+empId));
 				
@@ -104,4 +105,9 @@ public class EmployeeController {
 	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	    }
 	}
+@PutMapping("/updateAdress/{empId}/adress")
+ public ResponseEntity<Employee>updateAdress(@PathVariable String empId, @RequestBody EmployeeAdress adress){
+		Employee update=employeeService.updateEmployeeAdress(empId,adress);
+		return ResponseEntity.ok(update);
+ }
 }

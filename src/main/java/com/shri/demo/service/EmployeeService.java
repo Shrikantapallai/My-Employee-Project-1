@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import com.shri.demo.pojo.Employee;
+import com.shri.demo.pojo.EmployeeAdress;
 
 public interface EmployeeService {
 	public Employee save(Employee employee);
@@ -15,6 +16,7 @@ public interface EmployeeService {
 	public Employee updateByempId(String empId, Employee updatedEmployee);
     public List< Employee> getHighestPaidPerDepartment();
 	Employee getHigestSalary();
+	Employee updateEmployeeAdress(String empId, EmployeeAdress adress);
    
 	
 }

@@ -1,13 +1,8 @@
 package com.shri.demo.pojo;
 
+import jakarta.persistence.*;
 import org.antlr.v4.runtime.misc.NotNull;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 @Entity
 @Table(name="Employee_table")
 public class Employee {
@@ -22,18 +17,22 @@ public class Employee {
   private double salary;
   @Column(name="emp_location")
   private String location;
+  @Embedded
+  @Column(name="emp_adress")
+  private EmployeeAdress employeeAdress;
   
   public Employee() {
 	  
   }
   
-public Employee(String empId, String empName, String desgn, double salary, String location) {
+public Employee(String empId, String empName, String desgn, double salary, String location,EmployeeAdress employeeAdress) {
 	super();
 	this.empId = empId;
 	this.empName = empName;
 	this.desgn = desgn;
 	this.salary = salary;
 	this.location = location;
+	this.employeeAdress=employeeAdress;
 }
 public String getEmpId() {
 	return empId;
@@ -65,11 +64,24 @@ public String getLocation() {
 public void setLocation(String location) {
 	this.location = location;
 }
-@Override
-public String toString() {
-	return "Employee [empId=" + empId + ", empName=" + empName + ", desgn=" + desgn + ", salary=" + salary
-			+ ", location=" + location + "]";
-}
-  
-  
+
+	public EmployeeAdress getEmployeeAdress() {
+		return employeeAdress;
+	}
+
+	public void setEmployeeAdress(EmployeeAdress employeeAdress) {
+		this.employeeAdress = employeeAdress;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee{" +
+				"empId='" + empId + '\'' +
+				", empName='" + empName + '\'' +
+				", desgn='" + desgn + '\'' +
+				", salary=" + salary +
+				", location='" + location + '\'' +
+				", employeeAdress=" + employeeAdress +
+				'}';
+	}
 }
